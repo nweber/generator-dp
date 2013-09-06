@@ -1,0 +1,13 @@
+$default_padding: 0px;
+$default_background: #eee;
+
+body {
+    background-color: $default_background;
+
+    padding: {
+        top: $default_padding;
+        bottom: $default_padding;
+        left: $default_padding;
+        right: $default_padding;
+    }
+}
