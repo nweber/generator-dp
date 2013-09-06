@@ -1,10 +1,13 @@
 ## What's Included?
 
+### The Tools
+
 Yeoman provides scaffolding.
 Bower manages dependencies.
 Grunt manages build tasks.
 
-Grunt Plugins:
+### Grunt Plugins
+
 1. copy - allows grunt to copy generated files
 1. uglify - minify js files
 1. compass - compile sass
@@ -15,17 +18,22 @@ Grunt Plugins:
 1. concurrent - run grunt tasks concurrently
 1. clean - removes previously generated files
 
-Frameworks:
+### Frameworks
+
 1. [AngularJS](http://sass-lang.com/]
 1. [JS-Signals](https://github.com/millermedeiros/js-signals)
 1. [SASS](http://angularjs.org/)
 
 ## Optional Stuff
 
+### Frameworks
+
 Several frameworks are available right from Yeoman.  Adding a framework from Yeomon will download the files and add references to them in the appropriate places.
 1. JQuery `yo dp:jquery`
 1. Bootstrap `yo dp:bootstrap`
 1. Foundation `yo dp:foundation`
+
+### Using Bower
 
 Pretty much any other framework can be installed via Bower.
 1. Find a package to install via command line `bower search [<name>]` or from [here](http://sindresorhus.com/bower-components/).
