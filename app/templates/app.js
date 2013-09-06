@@ -1,5 +1,13 @@
 'use strict';
-var app = angular.module('<%= _.classify(appname) %>App', [
 
+angular.module('<%= appname %>.service', []);
+
+angular.module('<%= appname %>.directive', []);
+
+angular.module('<%= appname %>.filter', []);
+
+angular.module('<%= appname %>', [
+    '<%= appname %>.service',
+    '<%= appname %>.directive',
+    '<%= appname %>.filter'
 ]);
-app.scaffoldName = '<%= _.classify(appname) %>';

@@ -19,7 +19,7 @@ BootstrapGenerator.prototype.files = function files() {
             block: '<!-- build:css(.tmp) styles/main.css -->'
         },
         [
-            'bower_components/bootstrap/dist/css/bootstrap.css'
+            'libs/bootstrap/dist/css/bootstrap.css'
         ]
     );
 
@@ -28,7 +28,7 @@ BootstrapGenerator.prototype.files = function files() {
             block: '<!-- build:js scripts/libs.js -->'
         },
         [
-            'bower_components/bootstrap/dist/js/bootstrap.js'
+            'libs/bootstrap/dist/js/bootstrap.js'
         ]
     );
 };

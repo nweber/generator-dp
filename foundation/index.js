@@ -30,25 +30,25 @@ FoundationGenerator.prototype.files = function files() {
             block: '<!-- build:js scripts/libs.js -->'
         },
         [
-            'bower_components/foundation/js/vendor/jquery.js',
-            'bower_components/foundation/js/vendor/custom.modernizr.js',
-            'bower_components/foundation/js/vendor/zepto.js',
-            'bower_components/foundation/js/foundation/foundation.js',
-            'bower_components/foundation/js/foundation/foundation.alerts.js',
-            'bower_components/foundation/js/foundation/foundation.clearing.js',
-            'bower_components/foundation/js/foundation/foundation.cookie.js',
-            'bower_components/foundation/js/foundation/foundation.dropdown.js',
-            'bower_components/foundation/js/foundation/foundation.forms.js',
-            'bower_components/foundation/js/foundation/foundation.joyride.js',
-            'bower_components/foundation/js/foundation/foundation.magellan.js',
-            'bower_components/foundation/js/foundation/foundation.orbit.js',
-            'bower_components/foundation/js/foundation/foundation.reveal.js',
-            'bower_components/foundation/js/foundation/foundation.section.js',
-            'bower_components/foundation/js/foundation/foundation.tooltips.js',
-            'bower_components/foundation/js/foundation/foundation.topbar.js',
-            'bower_components/foundation/js/foundation/foundation.interchange.js',
-            'bower_components/foundation/js/foundation/foundation.placeholder.js',
-            'bower_components/foundation/js/foundation/foundation.abide.js'
+            'libs/foundation/js/vendor/jquery.js',
+            'libs/foundation/js/vendor/custom.modernizr.js',
+            'libs/foundation/js/vendor/zepto.js',
+            'libs/foundation/js/foundation/foundation.js',
+            'libs/foundation/js/foundation/foundation.alerts.js',
+            'libs/foundation/js/foundation/foundation.clearing.js',
+            'libs/foundation/js/foundation/foundation.cookie.js',
+            'libs/foundation/js/foundation/foundation.dropdown.js',
+            'libs/foundation/js/foundation/foundation.forms.js',
+            'libs/foundation/js/foundation/foundation.joyride.js',
+            'libs/foundation/js/foundation/foundation.magellan.js',
+            'libs/foundation/js/foundation/foundation.orbit.js',
+            'libs/foundation/js/foundation/foundation.reveal.js',
+            'libs/foundation/js/foundation/foundation.section.js',
+            'libs/foundation/js/foundation/foundation.tooltips.js',
+            'libs/foundation/js/foundation/foundation.topbar.js',
+            'libs/foundation/js/foundation/foundation.interchange.js',
+            'libs/foundation/js/foundation/foundation.placeholder.js',
+            'libs/foundation/js/foundation/foundation.abide.js'
         ]
     );
 
@@ -66,20 +66,20 @@ FoundationGenerator.prototype.files = function files() {
     // config file, but I don't wan to do that right now.
     // TODO :
     // Change the gruntfile.js to use a configuration file for compass.
-    // Modify that configuration file here and add the /app/bower_components/foundation/scss/ directory.
+    // Modify that configuration file here and add the /app/libs/foundation/scss/ directory.
 
     this.bowerInstall([ 'foundation' ], { save: true }, function () {
-        ncp('app/bower_components/foundation/scss/foundation.scss', 'app/styles/foundation.scss', function (err) {
+        ncp('app/libs/foundation/scss/foundation.scss', 'app/styles/foundation.scss', function (err) {
             loaded += 1;
             complete();
         }.bind(this));
 
-        ncp('app/bower_components/foundation/scss/normalize.scss', 'app/styles/normalize.scss', function (err) {
+        ncp('app/libs/foundation/scss/normalize.scss', 'app/styles/normalize.scss', function (err) {
             loaded += 1;
             complete();
         }.bind(this));
 
-        ncp('app/bower_components/foundation/scss/foundation', 'app/styles/foundation', function (err) {
+        ncp('app/libs/foundation/scss/foundation', 'app/styles/foundation', function (err) {
             loaded += 1;
             complete();
         }.bind(this));

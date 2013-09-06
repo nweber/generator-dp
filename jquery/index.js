@@ -19,7 +19,7 @@ JqueryGenerator.prototype.files = function files() {
             priority: 1
         },
         [
-            'bower_components/jquery/jquery.js'
+            'libs/jquery/jquery.js'
         ]
     );
 };

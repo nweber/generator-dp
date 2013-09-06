@@ -8,6 +8,7 @@
 
 var util = require('util'),
     path = require('path'),
+    dependencies = require('../dependency-utils'),
     yeoman = require('yeoman-generator');
 
 var DpGenerator = module.exports = function DpGenerator(args, options, config) {
@@ -135,8 +136,9 @@ DpGenerator.prototype.app = function app() {
 ////////////////////////////////////////////
 
 DpGenerator.prototype.signals = function signals() {
-    this.bowerInstall([ 'js-signals' ], { save: true });
-    this.libScripts.push('bower_components/js-signals/signals.js');
+    dependencies.installDependency(this, ['js-signals'], function () {
+        this.libScripts.push('libs/js-signals/dist/signals.js');
+    });
 };
 
 ////////////////////////////////////////////
@@ -146,14 +148,22 @@ DpGenerator.prototype.signals = function signals() {
 ////////////////////////////////////////////
 
 DpGenerator.prototype.angular = function angular() {
-    this.bowerInstall([ 'angular' ], { save: true });
-    this.libScripts.push('bower_components/angular/angular.js');
+    dependencies.installDependency(this, ['angular'], function () {
+        this.libScripts.push('libs/angular/angular.js');
 
-    this.copy('app.js', 'app/scripts/app.js');
-    this.mainScripts.push('scripts/app.js');
+        this.copy('app.js', 'app/scripts/app.js');
+        this.mainScripts.push('scripts/app.js');
 
-    this.mkdir('app/scripts/controllers');
-    this.mkdir('app/scripts/views');
+        this.mkdir('app/scripts/controllers');
+        this.mkdir('app/scripts/services');
+        this.mkdir('app/scripts/views');
+    });
+};
+
+DpGenerator.prototype.angularResource = function angularResource() {
+    dependencies.installDependency(this, ['angular-resource'], function () {
+        this.libScripts.push('libs/angular-resource/angular-resource.js');
+    });
 };
 
 ////////////////////////////////////////////

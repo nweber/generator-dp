@@ -101,7 +101,7 @@ module.exports = function (grunt) {
                 imagesDir: '<%%= yeoman.app %>/images',
                 javascriptsDir: '<%%= yeoman.app %>/scripts',
                 fontsDir: '<%%= yeoman.app %>/styles/fonts',
-                importPath: '<%%= yeoman.app %>/bower_components',
+                importPath: '<%%= yeoman.app %>/libs',
                 httpImagesPath: '/images',
                 httpGeneratedImagesPath: '/images/generated',
                 httpFontsPath: '/styles/fonts',
@@ -150,6 +150,25 @@ module.exports = function (grunt) {
                 'compass',
                 'copy:styles'
             ]
+        },
+        cssmin: {
+            dist: {
+                src: [
+                    '.tmp/styles/*.css',
+                    '.tmp/styles/**/*.css'
+                ],
+                dest: '<%%= yeoman.dist %>/css/app.min.css'
+            }
+        },
+        uglify: {
+            dist : {
+                files: {
+                    '<%%= yeoman.dist %>/js/app.min.js' : [
+                        '<%%= yeoman.app %>/scripts/*.js',
+                        '<%%= yeoman.app %>/scripts/**/*.js'
+                    ],
+                }
+            }
         }
     });
 
@@ -170,7 +189,8 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',
-        /*'uglify', Build a .min.js and a .all.js that contains libs. */
+        'uglify:dist',
+        'cssmin:dist',
         'copy:dist'
     ]);
 
