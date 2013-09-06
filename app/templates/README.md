@@ -5,20 +5,20 @@ Bower manages dependencies.
 Grunt manages build tasks.
 
 Grunt Plugins:
-1. copy (allows grunt to copy generated files)
-1. uglify (minify js files)
-1. compass (compile sass)
-1. jshint (error check js files)
-1. watch (watch for file changes to kick off tasks)
-1. open (allows Grunt to open files)
-1. connect (development web server)
-1. concurrent (run grunt tasks concurrently)
-1. clean (removes previously generated files)
+1. copy - allows grunt to copy generated files
+1. uglify - minify js files
+1. compass - compile sass
+1. jshint - error check js files
+1. watch - watch for file changes to kick off tasks
+1. open - allows Grunt to open files
+1. connect - development web server
+1. concurrent - run grunt tasks concurrently
+1. clean - removes previously generated files
 
 Frameworks:
-1. (AngularJS)[http://sass-lang.com/]
-1. (JS-Signals)[https://github.com/millermedeiros/js-signals]
-1. (SASS)[http://angularjs.org/]
+1. [AngularJS](http://sass-lang.com/]
+1. [JS-Signals](https://github.com/millermedeiros/js-signals)
+1. [SASS](http://angularjs.org/)
 
 ## Optional Stuff
 
