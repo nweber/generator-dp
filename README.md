@@ -79,25 +79,25 @@ Run the grunt server.  As you change files the page will automatically refresh.
 $ grunt server
 ```
 
-### Scaffolding Options
+## Scaffolding Options
 
-## Application Creation
+### Application Creation
 
 ```
 $ yo dp
 ```
 
 This is give you a skeleton project containing...
->An index.html file which defines an ng-app on the html tag.
->Angular, Angular Resource, and JS Signals are included by default.
->A controller attached to the body tag.
->The application modules will include service, directive, and filter modules.
->A SASS file is generated at styles/main.scss.
->A Grunt task to jslint files.
->A Grunt task to minify JavaScript and CSS files.
->A Grunt task to launch a web server that will automatically refresh as you modify code.
+>1. An index.html file which defines an ng-app on the html tag.
+>1. Angular, Angular Resource, and JS Signals are included by default.
+>1. A controller attached to the body tag.
+>1. The application modules will include service, directive, and filter modules.
+>1. A SASS file is generated at styles/main.scss.
+>1. A Grunt task to jslint files.
+>1. A Grunt task to minify JavaScript and CSS files.
+>1. A Grunt task to launch a web server that will automatically refresh as you modify code.
 
-## Angular
+### Angular
 
 1. Controllers
 ```
@@ -111,11 +111,12 @@ $ yo dp:json-service Name Url
 ```
 This will generate a service with the given name (NameService), which can be referenced by the name as a dependency.  The service will fetch URL and return the contents.
 Usage:
+*(terminal)*
 ```
-//(terminal)
 $ yo dp:json-service Items data/items.json
-
-//(javascript)
+```
+*(javascript)*
+```
 app.controller('TestController', function($scope, Items) {
 	Items.query(function (data) {
 		$scope.streams = data.items;
