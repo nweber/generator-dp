@@ -29,6 +29,7 @@ Grunt manages build tasks.
 ### Frameworks
 
 Several frameworks are available right from Yeoman.  Adding a framework from Yeomon will download the files and add references to them in the appropriate places.  
+
 1. JQuery `yo dp:jquery`
 1. Bootstrap `yo dp:bootstrap`
 1. Foundation `yo dp:foundation`
@@ -36,9 +37,11 @@ Several frameworks are available right from Yeoman.  Adding a framework from Yeo
 ### Using Bower
 
 Pretty much any other framework can be installed via Bower.  
+
 1. Find a package to install via command line `bower search [<name>]` or from [here](http://sindresorhus.com/bower-components/).
 1. Install the package. `bower install <package_name>
 1. The contents of the package will be in `app/bower_components`.  Include the required files in the appropriate location.
+
 *The `bower install <package_name>` will add the package as a requirement in the bower.json file.  Other folks can then run `bower install` to get the new dependencies.*
 
 ## Getting Started
