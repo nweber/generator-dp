@@ -1,47 +1,71 @@
-# generator-dp [![Build Status](https://secure.travis-ci.org/nweber/generator-dp.png?branch=master)](https://travis-ci.org/nweber/generator-dp)
+## What's Included?
 
-A generator for [Yeoman](http://yeoman.io).
+Yeoman provides scaffolding.
+Bower manages dependencies.
+Grunt manages build tasks.
 
+Grunt Plugins:
+1. copy (allows grunt to copy generated files)
+1. uglify (minify js files)
+1. compass (compile sass)
+1. jshint (error check js files)
+1. watch (watch for file changes to kick off tasks)
+1. open (allows Grunt to open files)
+1. connect (development web server)
+1. concurrent (run grunt tasks concurrently)
+1. clean (removes previously generated files)
+
+Frameworks:
+1. (AngularJS)[http://sass-lang.com/]
+1. (JS-Signals)[https://github.com/millermedeiros/js-signals]
+1. (SASS)[http://angularjs.org/]
+
+## Optional Stuff
+
+Several frameworks are available right from Yeoman.  Adding a framework from Yeomon will download the files and add references to them in the appropriate places.
+1. JQuery `yo dp:jquery`
+1. Bootstrap `yo dp:bootstrap`
+1. Foundation `yo dp:foundation`
+
+Pretty much any other framework can be installed via Bower.
+1. Find a package to install via command line (`bower search [<name>]`) or from [here](http://sindresorhus.com/bower-components/).
+1. Install the package. `bower install <package_name>
+1. The contents of the package will be in `app/bower_components`.  Include the required files in the appropriate location.
+*The `bower install <package_name>` will add the package as a requirement in the bower.json file.  Other folks can then run `bower install` to get the new dependencies.*
 
 ## Getting Started
 
-### What is Yeoman?
+### Prerequisite Installation
 
-Trick question. It's not a thing. It's this guy:
+1. Install [nodejs](http://nodejs.org/).
+1. Install Grunt. `npm install -g grunt-cli`
+1. Install Bower. `npm install -g bower`
+1. (Windows Only) Install [ruby](http://rubyinstaller.org/).
+1. Install Compass (which will install SASS). `gem update --system && gem install compass`
 
-![](http://i.imgur.com/JHaAlBJ.png)
+### Quick Start
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
+1. Clone repo.
 
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
-
+1. Download dependencies.
 ```
-$ npm install -g yo
-```
-
-### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-dp from npm, run:
-
-```
-$ npm install -g generator-dp
+$ npm install
+$ bower install
 ```
 
-Finally, initiate the generator:
+Grunt Options:
 
+Do a build, including jslint.
 ```
-$ yo dp
+$ grunt
 ```
 
-### Getting To Know Yeoman
+Just build distribution files:
+```
+$ grunt build
+```
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
-
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
-
-
-## License
-
-[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+Run the grunt server.  As you change files the page will automatically refresh.
+```
+$ grunt server
+```
