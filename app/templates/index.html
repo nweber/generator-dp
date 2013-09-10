@@ -5,10 +5,22 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
+
+        <!-- @if NODE_ENV='production' -->
+        <link rel="stylesheet" href="dist/styles/app.min.css">
+        <!-- @endif -->
     </head>
     <body ng-controller="<%= appname %>Controller">
+        <!-- @if NODE_ENV='development' -->
+        <h3>Development Build!</h3>
+        <!-- @endif -->
+
         <div class="container">
             {{demo}}
         </div>
+
+        <!-- @if NODE_ENV='production' -->
+        <script src="dist/scripts/app.min.js"></script>
+        <!-- @endif -->
     </body>
 </html>

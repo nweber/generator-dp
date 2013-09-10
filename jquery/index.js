@@ -1,7 +1,8 @@
 'use strict';
-var util = require('util');
-var yeoman = require('yeoman-generator');
-var BaseIndexGenerator = require('../sub-base.js');
+var util = require('util'),
+    yeoman = require('yeoman-generator'),
+    dependencies = require('../dependency-utils'),
+    BaseIndexGenerator = require('../sub-base.js');
 
 var JqueryGenerator = module.exports = function JqueryGenerator(args, options, config) {
     args.push('jquery'); // name it
@@ -12,14 +13,15 @@ var JqueryGenerator = module.exports = function JqueryGenerator(args, options, c
 util.inherits(JqueryGenerator, BaseIndexGenerator);
 
 JqueryGenerator.prototype.files = function files() {
-    this.bowerInstall([ 'jquery' ], { save: true });
-    this.addScriptToIndex(
-        {
-            block: '<!-- build:js scripts/libs.js -->',
-            priority: 1
-        },
-        [
-            'libs/jquery/jquery.js'
-        ]
-    );
+    dependencies.installDependency(this, ['jquery'], function () {
+        this.addScriptToIndex(
+            {
+                block: '<!-- build:js scripts/libs.js -->',
+                priority: 1
+            },
+            [
+                'libs/jquery/jquery.js'
+            ]
+        );
+    });
 };

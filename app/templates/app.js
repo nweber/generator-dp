@@ -1,5 +1,7 @@
 'use strict';
 
+console.log("Environment: " + '/* @echo NODE_ENV */' + " | Version: " + '/* @echo VERSION */');
+
 angular.module('<%= appname %>.service', []);
 
 angular.module('<%= appname %>.directive', []);

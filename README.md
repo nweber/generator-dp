@@ -17,8 +17,10 @@ Grunt manages build tasks.
 1. connect - development web server
 1. concurrent - run grunt tasks concurrently
 1. clean - removes previously generated files
+1. env - provides environment variables
+1. preprocess - preprocesses files allowing for integration with environment variables
 
-### Frameworks
+### Built-In Frameworks
 
 1. [AngularJS](http://sass-lang.com/)
 1. [JS-Signals](https://github.com/millermedeiros/js-signals)
@@ -64,9 +66,9 @@ $ bower install
 
 Grunt Options:
 
-Do a build, including jslint.
+Lint all of the JavaScript files.
 ```
-$ grunt
+$ grunt lint
 ```
 
 Just build distribution files:
@@ -78,6 +80,54 @@ Run the grunt server.  As you change files the page will automatically refresh.
 ```
 $ grunt server
 ```
+
+## Environment and Preprocessing
+
+### Description
+
+The env and preprocess grunt plugins allow the use of basic logic statements to alter the final produced HTML/JavaScript/CSS code.  The act in similar ways to global variables for conditional compilation in ActionScript.  
+  
+By default the application is configured with development and production environments.  The development environment is used with the `grunt server` command.  The production environment is used with the `grunt build` command.  
+
+The process module allows for various types of logical statements.  The most common will be to conditionally include/exclude code and to echo environment variables.  
+
+Only include code in a production build (HTML):  
+```
+<!-- @if NODE_ENV='production' -->
+<link rel="stylesheet" href="dist/styles/app.min.css">
+<!-- @endif -->
+```
+
+Only include code if the `DEBUG` environment variable is true (HTML):  
+```
+<!-- @ifdef DEBUG -->
+<h1>Debugging mode - <!-- @echo RELEASE_TAG --> </h1>
+<!-- @endif -->
+```
+
+Write the values of two environment variables into the code (JavaScript):  
+```
+console.log("Environment: " + '/* @echo NODE_ENV */' + " | Version: " + '/* @echo VERSION */');
+```
+
+Set the background color of the application based on environment (CSS):  
+```
+body {
+	/* @if NODE_ENV=='development' */
+	background-color: red;
+	/* @endif */
+}
+```
+
+All of the available directives are:  
+1. `@if VAR='value'` / `@endif` - This will include the enclosed block if your test passes
+1. `@ifdef VAR` / `@endif` - This will include the enclosed block if VAR is defined (typeof !== 'undefined')
+1. `@ifndef VAR` / `@endif` - This will include the enclosed block if VAR is not defined (typeof === 'undefined')
+1. `@include` - This will include the source from an external file. If the included source ends with a newline then the following line will be space indented to the level the @include was found.
+1. `@exclude` / `@endexclude` - This will remove the enclosed block upon processing
+1. `@echo VAR` - This will include the environment variable VAR into your source
+
+[For more information go here.](https://github.com/jsoverson/preprocess)  
 
 ## Scaffolding Options
 
@@ -99,7 +149,7 @@ This is give you a skeleton project containing...
 
 ### Angular
 
-1. Controllers
+1. Controller
 ```
 $ yo dp:controller Name Dependency1 ... Dependency9
 ```
@@ -109,13 +159,11 @@ This will generate a controller with the given name (NameController).  Dependenc
 ```
 $ yo dp:json-service Name Url
 ```
-This will generate a service with the given name (NameService), which can be referenced by the name as a dependency.  The service will fetch URL and return the contents.
-Usage:
-*(terminal)*
+This will generate a service with the given name (NameService), which can be referenced by the name as a dependency.  The service will fetch URL and return the contents.  
+Usage:  
 ```
 $ yo dp:json-service Items data/items.json
 ```
-*(javascript)*
 ```
 app.controller('TestController', function($scope, Items) {
 	Items.query(function (data) {

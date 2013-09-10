@@ -1,8 +1,9 @@
 'use strict';
-var util = require('util');
-var yeoman = require('yeoman-generator');
-var ncp = require('ncp').ncp;
-var BaseIndexGenerator = require('../sub-base.js');
+var util = require('util'),
+    yeoman = require('yeoman-generator'),
+    ncp = require('ncp').ncp,
+    dependencies = require('../dependency-utils'),
+    BaseIndexGenerator = require('../sub-base.js');
 
 var FoundationGenerator = module.exports = function BootstrapGenerator(args, options, config) {
     args.push('foundation'); // name it
@@ -55,7 +56,6 @@ FoundationGenerator.prototype.files = function files() {
     var loaded = 0;
     function complete() {
         if (loaded === 3) {
-            console.log("complete");
             cb();
         }
     }
@@ -68,7 +68,7 @@ FoundationGenerator.prototype.files = function files() {
     // Change the gruntfile.js to use a configuration file for compass.
     // Modify that configuration file here and add the /app/libs/foundation/scss/ directory.
 
-    this.bowerInstall([ 'foundation' ], { save: true }, function () {
+    dependencies.installDependency(this, ['foundation'], function () {
         ncp('app/libs/foundation/scss/foundation.scss', 'app/styles/foundation.scss', function (err) {
             loaded += 1;
             complete();
