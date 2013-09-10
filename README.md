@@ -120,12 +120,13 @@ body {
 ```
 
 All of the available directives are:  
-1. `@if VAR='value'` / `@endif` - This will include the enclosed block if your test passes  
-1. `@ifdef VAR` / `@endif` - This will include the enclosed block if VAR is defined (typeof !== 'undefined')  
-1. `@ifndef VAR` / `@endif` - This will include the enclosed block if VAR is not defined (typeof === 'undefined')  
-1. `@include` - This will include the source from an external file. If the included source ends with a newline then the following line will be space indented to the level the @include was found.  
-1. `@exclude` / `@endexclude` - This will remove the enclosed block upon processing  
-1. `@echo VAR` - This will include the environment variable VAR into your source  
+
+1. `@if VAR='value' / @endif` - This will include the enclosed block if your test passes
+1. `@ifdef VAR / @endif` - This will include the enclosed block if VAR is defined (typeof !== 'undefined')
+1. `@ifndef VAR / @endif` - This will include the enclosed block if VAR is not defined (typeof === 'undefined')
+1. `@include` - This will include the source from an external file. If the included source ends with a newline then the following line will be space indented to the level the @include was found.
+1. `@exclude / @endexclude` - This will remove the enclosed block upon processing
+1. `@echo VAR` - This will include the environment variable VAR into your source
 
 [For more information go here.](https://github.com/jsoverson/preprocess)  
 
