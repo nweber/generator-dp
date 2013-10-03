@@ -117,20 +117,10 @@ module.exports = function (grunt) {
         compass: {
             options: {
                 cssDir: '<%%= yeoman.temp %>/styles',
-                generatedImagesDir: '<%%= yeoman.temp %>/images/generated',
-                imagesDir: '<%%= yeoman.app %>/images',
-                javascriptsDir: '<%%= yeoman.app %>/scripts',
-                fontsDir: '<%%= yeoman.app %>/styles/fonts',
-                importPath: '<%%= yeoman.app %>/libs',
-                httpImagesPath: '/images',
-                httpGeneratedImagesPath: '/images/generated',
-                httpFontsPath: '/styles/fonts',
-                relativeAssets: false
             },
             dist: {
                 options: {
                     sassDir: '<%%= yeoman.dist %>/<%%= yeoman.app %>/styles',
-                    generatedImagesDir: '<%%= yeoman.dist %>/images/generated'
                 }
             },
             server: {
@@ -255,12 +245,21 @@ module.exports = function (grunt) {
             'copy:dev',
             'env:dev',
             'preprocess:dev',
+            'compass:server',
             'concurrent:server',
             'connect:livereload',
             'open',
             'watch'
         ]);
     });
+
+    grunt.registerTask('dev_build', [
+        'clean:server',
+        'copy:dev',
+        'env:dev',
+        'preprocess:dev',
+        'compass:server'
+    ]);
 
     grunt.registerTask('build', [
         'clean:dist',

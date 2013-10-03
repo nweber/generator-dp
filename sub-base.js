@@ -13,6 +13,23 @@ var BaseIndexGenerator = module.exports = function BaseIndexGenerator(args, opti
 
 util.inherits(BaseIndexGenerator, yeoman.generators.NamedBase);
 
+BaseIndexGenerator.prototype.addModuleToApp = function (options, modules) {
+    options.priority = options.priority || 0;
+
+    var items = [];
+    modules.forEach(function (s, i) {
+        items.push(",'" + s + "'");
+    });
+
+    this.rewriteFile({
+        file: 'app/scripts/app.js',
+        priority: options.priority,
+        block: options.block,
+        needle: '// endblock',
+        splicable: items
+    });
+}
+
 BaseIndexGenerator.prototype.addScriptToIndex = function (options, scripts) {
     options.priority = options.priority || 0; // assume scripts go at the end
 

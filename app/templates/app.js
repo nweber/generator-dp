@@ -9,7 +9,9 @@ angular.module('<%= appname %>.directive', []);
 angular.module('<%= appname %>.filter', []);
 
 angular.module('<%= appname %>', [
-    '<%= appname %>.service',
-    '<%= appname %>.directive',
-    '<%= appname %>.filter'
+    '<%= appname %>.service'
+    ,'<%= appname %>.directive'
+    ,'<%= appname %>.filter'
+    // module:block
+    // endblock
 ]);

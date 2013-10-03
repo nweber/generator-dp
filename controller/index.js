@@ -1,7 +1,7 @@
 'use strict';
-var util = require('util');
-var yeoman = require('yeoman-generator');
-var BaseIndexGenerator = require('../sub-base.js');
+var util = require('util'),
+    yeoman = require('yeoman-generator'),
+    BaseIndexGenerator = require('../sub-base.js');
 
 var ControllerGenerator = module.exports = function ControllerGenerator(args, options, config) {
     BaseIndexGenerator.apply(this, arguments);
@@ -11,15 +11,25 @@ var ControllerGenerator = module.exports = function ControllerGenerator(args, op
 
 util.inherits(ControllerGenerator, BaseIndexGenerator);
 
-ControllerGenerator.prototype.init = function init() {
-    if (this.injections && this.injections.length > 0) {
-        this.has_injections = true;
-        this.injections_list = this.injections.join(", ");
-        console.log('Initalizing controller with: ' + this.injections_list);
-    }
-    else {
-        this.has_injections = false;
-    }
+ControllerGenerator.prototype.askForDependencies = function askForDependencies() {
+    var cb = this.async();
+
+    var prompts = [
+        {
+            type: 'input',
+            name: 'dependencies',
+            message: 'Which dependencies would you like to include? (space separated list, blank for none)'
+        }
+    ];
+
+    this.prompt(prompts, function (props) {
+        var d = props.dependencies.trim();
+
+        this.count = 0;
+        this.injections = (d !== '') ? props.dependencies.split(' ') : [];
+
+        cb();
+    }.bind(this));
 }
 
 ControllerGenerator.prototype.files = function files() {

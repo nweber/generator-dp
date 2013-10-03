@@ -68,7 +68,7 @@ DpGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // have Yeoman greet the user.
-    console.log(this.yeoman);
+    // console.log(this.yeoman);
 
     var prompts = this.getPrompts();
 
@@ -136,8 +136,79 @@ DpGenerator.prototype.app = function app() {
 ////////////////////////////////////////////
 
 DpGenerator.prototype.signals = function signals() {
-    dependencies.installDependency(this, ['js-signals'], function () {
-        this.libScripts.push('libs/js-signals/dist/signals.js');
+    var cb = dependencies.installDependency(this, ['js-signals'], function () {
+        this.mkdir('app/scripts/libs/js-signals');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/js-signals/dist/signals.js',
+                    dest: 'app/scripts/libs/js-signals/signals.js'
+                }
+            ],
+            function () {
+                this.libScripts.push('scripts/libs/js-signals/signals.js');
+
+                cb();
+            }
+        );
+    });
+};
+
+////////////////////////////////////////////
+//
+// Underscore
+//
+////////////////////////////////////////////
+
+DpGenerator.prototype.underscore = function underscore() {
+    var cb = dependencies.installDependency(this, ['underscore', 'underscore.string'], function () {
+        this.mkdir('app/scripts/libs/underscore');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/underscore/underscore.js',
+                    dest: 'app/scripts/libs/underscore/underscore.js'
+                },
+                {
+                    src: 'app/bower_components/underscore.string/lib/underscore.string.js',
+                    dest: 'app/scripts/libs/underscore/underscore.string.js'
+                }
+            ],
+            function () {
+                this.libScripts.push('scripts/libs/underscore/underscore.js');
+                this.libScripts.push('scripts/libs/underscore/underscore.string.js');
+
+                cb();
+            }
+        );
+    });
+};
+
+////////////////////////////////////////////
+//
+// Signals
+//
+////////////////////////////////////////////
+
+DpGenerator.prototype.signals = function signals() {
+    var cb = dependencies.installDependency(this, ['js-signals'], function () {
+        this.mkdir('app/scripts/libs/js-signals');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/js-signals/dist/signals.js',
+                    dest: 'app/scripts/libs/js-signals/signals.js'
+                }
+            ],
+            function () {
+                this.libScripts.push('scripts/libs/js-signals/signals.js');
+
+                cb();
+            }
+        );
     });
 };
 
@@ -148,21 +219,49 @@ DpGenerator.prototype.signals = function signals() {
 ////////////////////////////////////////////
 
 DpGenerator.prototype.angular = function angular() {
-    dependencies.installDependency(this, ['angular'], function () {
-        this.libScripts.push('libs/angular/angular.js');
+    var cb = dependencies.installDependency(this, ['angular'], function () {
+        this.mkdir('app/scripts/libs/angular');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/angular/angular.js',
+                    dest: 'app/scripts/libs/angular/angular.js'
+                }
+            ],
+            function () {
+                this.libScripts.push('scripts/libs/angular/angular.js');
 
-        this.copy('app.js', 'app/scripts/app.js');
-        this.mainScripts.push('scripts/app.js');
+                this.copy('app.js', 'app/scripts/app.js');
+                this.mainScripts.push('scripts/app.js');
 
-        this.mkdir('app/scripts/controllers');
-        this.mkdir('app/scripts/services');
-        this.mkdir('app/scripts/views');
+                this.mkdir('app/scripts/controllers');
+                this.mkdir('app/scripts/services');
+                this.mkdir('app/scripts/views');
+
+                cb();
+            }
+        );
     });
 };
 
 DpGenerator.prototype.angularResource = function angularResource() {
-    dependencies.installDependency(this, ['angular-resource'], function () {
-        this.libScripts.push('libs/angular-resource/angular-resource.js');
+    var cb = dependencies.installDependency(this, ['angular-resource'], function () {
+        this.mkdir('app/scripts/libs/angular-resource');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/angular-resource/angular-resource.js',
+                    dest: 'app/scripts/libs/angular-resource/angular-resource.js'
+                }
+            ],
+            function () {
+                this.libScripts.push('scripts/libs/angular-resource/angular-resource.js');
+
+                cb();
+            }
+        );
     });
 };
 
@@ -196,9 +295,55 @@ DpGenerator.prototype.sass = function sass() {
 //
 ////////////////////////////////////////////
 
-DpGenerator.prototype.writeIndex = function writeIndex() {
+DpGenerator.prototype.appendAllScripts = function appendAllScripts() {
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/libs.js', this.libScripts);
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', this.mainScripts);
+}
+
+DpGenerator.prototype.appendDevEnvironment = function appendDevEnvironment() {
+    var lines = this.indexFile.split('\n'),
+        start = '<!-- build:',
+        end = '<!-- endbuild -->';
+
+    function appendLine(lines, index, before, str) {
+        var spaces = 0;
+        while (lines[index].charAt(spaces) === ' ') {
+            spaces += 1;
+        }
+
+        var spaceStr = '';
+        while ((spaces -= 1) >= 0) {
+            spaceStr += ' ';
+        }
+
+        var insertIndex = index;
+        if (!before) {
+            insertIndex = index + 1;
+        }
+
+        lines.splice(insertIndex, 0, (spaceStr + str));
+    }
+
+    var i,
+        line;
+
+    for (i = 0; i < lines.length; i++) {
+        line = lines[i];
+
+        if (line.indexOf(start) !== -1) {
+            appendLine(lines, i, true, "<!-- @if NODE_ENV='development' -->");
+            i++; // skip the added line
+        }
+        if (line.indexOf(end) !== -1) {
+            appendLine(lines, i, false, "<!-- @endif -->");
+            i++; // skip the added line
+        }
+    };
+
+    this.indexFile = lines.join('\n');
+}
+
+DpGenerator.prototype.writeIndex = function writeIndex() {
     this.write('app/index.html', this.indexFile);
 }
 
@@ -209,31 +354,57 @@ DpGenerator.prototype.writeIndex = function writeIndex() {
 ////////////////////////////////////////////
 
 DpGenerator.prototype.angularDefaults = function angularDefaults() {
+    var cb = this.async();
+
     var options = {
         args: [this.appname]
     }
 
+    //console.log("Creating main controller...");
     this.invoke("dp:controller", options, function () {
         console.log("Main application controller created.");
+
+        cb();
     });
 }
 
 DpGenerator.prototype.frameworks = function frameworks() {
+    var cb = this.async(),
+        loading = 0,
+        loaded = 0;
+
     if (this.includeJquery) {
+        loading += 1;
         this.invoke("dp:jquery", {}, function () {
             console.log("JQuery installed.");
+            loaded += 1;
+            checkDone();
         });
     }
 
     if (this.includeBootstrap) {
+        loading += 1;
         this.invoke("dp:bootstrap", {}, function () {
             console.log("Bootstrap installed.");
+            loaded += 1;
+            checkDone();
         });
     }
 
     if (this.includeFoundation) {
+        loading += 1;
         this.invoke("dp:foundation", {}, function () {
             console.log("Foundation installed.");
+            loaded += 1;
+            checkDone();
         });
     }
+
+    function checkDone() {
+        if (loading === loaded) {
+            cb();
+        }
+    }
+
+    checkDone();
 };

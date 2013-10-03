@@ -152,15 +152,17 @@ This is give you a skeleton project containing...
 
 1. Controller
 ```
-$ yo dp:controller Name Dependency1 ... Dependency9
+$ yo dp:controller Name
+[?] Which dependencies would you like to include? (space separated list, blank for none)
 ```
 This will generate a controller with the given name (NameController).  Dependencies are optional.  If provided they will automatically be included in the controller declaration.
 
 1. JSON Service
 ```
-$ yo dp:json-service Name Url
+$ yo dp:json-service Name url
 ```
-This will generate a service with the given name (NameService), which can be referenced by the name as a dependency.  The service will fetch URL and return the contents.  
+This will generate a service with the given name, which can be referenced by the name as a dependency.  The service will fetch URL and return the contents.  
+  
 Usage:  
 ```
 $ yo dp:json-service Items data/items.json
@@ -174,9 +176,33 @@ app.controller('TestController', function($scope, Items) {
 ```
 
 1. HTTP Service
-
-
+```
+$ yo dp:http-service Name url type
+[?] Which dependencies would you like to include? (space separated list, blank for none)
+[?] Which properties would you like to include? (space separated list, blank for none)
+```
+This will generate a service with the given name, which can be referenced by the name as a dependency.  The service will invoke the given URL using the provided type (get/post/etc) method.  
+`type` is optional and will default to "get".  
+If provided, the provided dependencies and properties will be automatically included.  
 
 1. Data Service
+```
+$ yo dp:model-service Name
+```
+This will create a service that operates as a data model.  The model will have the methods `get` and `set`.  A `changed` signal will be available as a property of the model.  
 
+1. State Router
+```
+$ yo dp:state-router
+[?] What is the route's name? One
+[?] What is the route's url? /one
+[?] What is the route's templateUrl? /one.t.html
+[?] Make another route? Yes
+[?] What is the route's name? Two
+[?] What is the route's url? /two
+[?] What is the route's templateUrl? /two.t.html
+[?] Make another route? No
+[?] What is the default route url? /one
+```
+This will create a state router with the given parameters.  For details on how to use the state router, [see here](https://github.com/angular-ui/ui-router).  
 
