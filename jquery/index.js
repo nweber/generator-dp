@@ -13,15 +13,29 @@ var JqueryGenerator = module.exports = function JqueryGenerator(args, options, c
 util.inherits(JqueryGenerator, BaseIndexGenerator);
 
 JqueryGenerator.prototype.files = function files() {
-    dependencies.installDependency(this, ['jquery'], function () {
-        this.addScriptToIndex(
-            {
-                block: '<!-- build:js scripts/libs.js -->',
-                priority: 1
-            },
+    var cb = dependencies.installDependency(this, ['jquery'], function () {
+        this.mkdir('app/scripts/libs/jquery');
+        dependencies.copyFiles(
+            this,
             [
-                'libs/jquery/jquery.js'
-            ]
+                {
+                    src: 'app/bower_components/jquery/jquery.js',
+                    dest: 'app/scripts/libs/jquery/jquery.js'
+                }
+            ],
+            function () {
+                this.addScriptToIndex(
+                    {
+                        block: '<!-- build:js scripts/libs.js -->',
+                        priority: 1
+                    },
+                    [
+                        'scripts/libs/jquery/jquery.js'
+                    ]
+                );
+
+                cb();
+            }
         );
     });
 };

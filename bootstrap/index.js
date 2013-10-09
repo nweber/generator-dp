@@ -13,23 +13,41 @@ var BootstrapGenerator = module.exports = function BootstrapGenerator(args, opti
 util.inherits(BootstrapGenerator, BaseIndexGenerator);
 
 BootstrapGenerator.prototype.files = function files() {
-    dependencies.installDependency(this, ['bootstrap'], function () {
-        this.addCssToIndex(
-            {
-                block: '<!-- build:css(.tmp) styles/main.css -->'
-            },
+    var cb = dependencies.installDependency(this, ['bootstrap'], function () {
+        this.mkdir('app/scripts/libs/bootstrap');
+        dependencies.copyFiles(
+            this,
             [
-                'libs/bootstrap/dist/css/bootstrap.css'
-            ]
-        );
+                {
+                    src: 'app/bower_components/bootstrap/dist/css/bootstrap.css',
+                    dest: 'app/styles/bootstrap.css'
+                },
+                {
+                    src: 'app/bower_components/bootstrap/dist/js/bootstrap.js',
+                    dest: 'app/scripts/libs/bootstrap/bootstrap.js'
+                }
+            ],
+            function () {
+                this.addCssToIndex(
+                    {
+                        block: '<!-- build:css(.tmp) styles/main.css -->'
+                    },
+                    [
+                        'styles/bootstrap.css'
+                    ]
+                );
 
-        this.addScriptToIndex(
-            {
-                block: '<!-- build:js scripts/libs.js -->'
-            },
-            [
-                'libs/bootstrap/dist/js/bootstrap.js'
-            ]
+                this.addScriptToIndex(
+                    {
+                        block: '<!-- build:js scripts/libs.js -->'
+                    },
+                    [
+                        'scripts/libs/bootstrap/bootstrap.js'
+                    ]
+                );
+
+                cb();
+            }
         );
     });
 };
