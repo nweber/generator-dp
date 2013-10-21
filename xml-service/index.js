@@ -3,16 +3,17 @@ var util = require('util');
 var yeoman = require('yeoman-generator');
 var BaseIndexGenerator = require('../sub-base.js');
 
-var JsonServiceGenerator = module.exports = function JsonServiceGenerator(args, options, config) {
+var XmlServiceGenerator = module.exports = function XmlServiceGenerator(args, options, config) {
     BaseIndexGenerator.apply(this, arguments);
     this.argument('url', { type: String, required: true });
-    console.log('Creating a json service named: "' + this.name + 'Service" for file (' + this.url + ').');
+    console.log('**NOTE** Requires xml2json | install with $yo dp:xml2json');
+    console.log('Creating a xml service named: "' + this.name + '" for file (' + this.url + ").");
 };
 
-util.inherits(JsonServiceGenerator, BaseIndexGenerator);
+util.inherits(XmlServiceGenerator, BaseIndexGenerator);
 
-JsonServiceGenerator.prototype.files = function files() {
-    var app = 'app/',
+XmlServiceGenerator.prototype.files = function files() {
+  var app = 'app/',
         path = 'scripts/services/',
         file = this.name + 'Service.js';
 

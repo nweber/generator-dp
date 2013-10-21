@@ -14,74 +14,81 @@ var FoundationGenerator = module.exports = function BootstrapGenerator(args, opt
 util.inherits(FoundationGenerator, BaseIndexGenerator);
 
 FoundationGenerator.prototype.files = function files() {
-    var cb = this.async();
+    var cb = dependencies.installDependency(this, ['foundation'], function () {
+        this.mkdir('app/scripts/libs/foundation');
+        this.mkdir('app/scripts/libs/foundation/vendor');
+        dependencies.copyFiles(
+            this,
+            [
+                {
+                    src: 'app/bower_components/foundation/scss/foundation.scss',
+                    dest: 'app/styles/foundation.scss'
+                },
+                {
+                    src: 'app/bower_components/foundation/scss/normalize.scss',
+                    dest: 'app/styles/normalize.scss'
+                },
+                {
+                    src: 'app/bower_components/foundation/scss/foundation',
+                    dest: 'app/styles/foundation'
+                },
+                {
+                    src: 'app/bower_components/foundation/js/foundation/',
+                    dest: 'app/scripts/libs/foundation/'
+                },
+                {
+                    src: 'app/bower_components/foundation/js/vendor/jquery.js',
+                    dest: 'app/scripts/libs/foundation/vendor/jquery.js'
+                },
+                {
+                    src: 'app/bower_components/foundation/js/vendor/custom.modernizr.js',
+                    dest: 'app/scripts/libs/foundation/vendor/custom.modernizr.js'
+                },
+                {
+                    src: 'app/bower_components/foundation/js/vendor/zepto.js',
+                    dest: 'app/scripts/libs/foundation/vendor/zepto.js'
+                }
+            ],
+            function () {
+                this.addCssToIndex(
+                    {
+                        block: '<!-- build:css(.tmp) styles/main.css -->'
+                    },
+                    [
+                        'styles/normalize.css',
+                        'styles/foundation.css'
+                    ]
+                );
 
-    this.addCssToIndex(
-        {
-            block: '<!-- build:css(.tmp) styles/main.css -->'
-        },
-        [
-            'styles/normalize.css',
-            'styles/foundation.css'
-        ]
-    );
+                this.addScriptToIndex(
+                    {
+                        block: '<!-- build:js scripts/libs.js -->'
+                    },
+                    [
+                        'scripts/libs/foundation/vendor/jquery.js',
+                        'scripts/libs/foundation/vendor/custom.modernizr.js',
+                        'scripts/libs/foundation/vendor/zepto.js',
+                        'scripts/libs/foundation/foundation.js',
+                        'scripts/libs/foundation/foundation.alerts.js',
+                        'scripts/libs/foundation/foundation.clearing.js',
+                        'scripts/libs/foundation/foundation.cookie.js',
+                        'scripts/libs/foundation/foundation.dropdown.js',
+                        'scripts/libs/foundation/foundation.forms.js',
+                        'scripts/libs/foundation/foundation.joyride.js',
+                        'scripts/libs/foundation/foundation.magellan.js',
+                        'scripts/libs/foundation/foundation.orbit.js',
+                        'scripts/libs/foundation/foundation.reveal.js',
+                        'scripts/libs/foundation/foundation.section.js',
+                        'scripts/libs/foundation/foundation.tooltips.js',
+                        'scripts/libs/foundation/foundation.topbar.js',
+                        'scripts/libs/foundation/foundation.interchange.js',
+                        'scripts/libs/foundation/foundation.placeholder.js',
+                        'scripts/libs/foundation/foundation.abide.js'
+                    ]
+                );
 
-    this.addScriptToIndex(
-        {
-            block: '<!-- build:js scripts/libs.js -->'
-        },
-        [
-            'libs/foundation/js/vendor/jquery.js',
-            'libs/foundation/js/vendor/custom.modernizr.js',
-            'libs/foundation/js/vendor/zepto.js',
-            'libs/foundation/js/foundation/foundation.js',
-            'libs/foundation/js/foundation/foundation.alerts.js',
-            'libs/foundation/js/foundation/foundation.clearing.js',
-            'libs/foundation/js/foundation/foundation.cookie.js',
-            'libs/foundation/js/foundation/foundation.dropdown.js',
-            'libs/foundation/js/foundation/foundation.forms.js',
-            'libs/foundation/js/foundation/foundation.joyride.js',
-            'libs/foundation/js/foundation/foundation.magellan.js',
-            'libs/foundation/js/foundation/foundation.orbit.js',
-            'libs/foundation/js/foundation/foundation.reveal.js',
-            'libs/foundation/js/foundation/foundation.section.js',
-            'libs/foundation/js/foundation/foundation.tooltips.js',
-            'libs/foundation/js/foundation/foundation.topbar.js',
-            'libs/foundation/js/foundation/foundation.interchange.js',
-            'libs/foundation/js/foundation/foundation.placeholder.js',
-            'libs/foundation/js/foundation/foundation.abide.js'
-        ]
-    );
-
-    var loaded = 0;
-    function complete() {
-        if (loaded === 3) {
-            cb();
-        }
-    }
-
-    // SASS is sort of goofy and we have to put all of the SCSS files into the same directory for compass to
-    // compile them.  Foundation is also dumb 'cause they don't have distribution files in their bower install.
-    // Oh well.  In theory we could expand the grunt trask for compass to compile multiple locations with a
-    // config file, but I don't wan to do that right now.
-    // TODO :
-    // Change the gruntfile.js to use a configuration file for compass.
-    // Modify that configuration file here and add the /app/libs/foundation/scss/ directory.
-
-    dependencies.installDependency(this, ['foundation'], function () {
-        ncp('app/libs/foundation/scss/foundation.scss', 'app/styles/foundation.scss', function (err) {
-            loaded += 1;
-            complete();
-        }.bind(this));
-
-        ncp('app/libs/foundation/scss/normalize.scss', 'app/styles/normalize.scss', function (err) {
-            loaded += 1;
-            complete();
-        }.bind(this));
-
-        ncp('app/libs/foundation/scss/foundation', 'app/styles/foundation', function (err) {
-            loaded += 1;
-            complete();
-        }.bind(this));
-    }.bind(this));
+                cb();
+            }
+        );
+    });
 };
