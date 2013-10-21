@@ -22,9 +22,9 @@ Grunt manages build tasks.
 
 ### Built-In Frameworks
 
-1. [AngularJS](http://sass-lang.com/)
+1. [AngularJS](http://angularjs.org/)
 1. [JS-Signals](https://github.com/millermedeiros/js-signals)
-1. [SASS](http://angularjs.org/)
+1. [SASS](http://sass-lang.com/)
 
 ## Optional Stuff
 
